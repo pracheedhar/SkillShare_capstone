@@ -37,8 +37,24 @@ app.use('/api/subscriptions', require('./routes/subscriptions'));
 app.use('/api/analytics', require('./routes/analytics'));
 
 // Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+app.get('/api/health', async (req, res) => {
+  const prisma = require('./config/database');
+  try {
+    // Test database connection
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ 
+      status: 'OK', 
+      message: 'Server is running',
+      database: 'connected'
+    });
+  } catch (error) {
+    res.status(503).json({ 
+      status: 'ERROR', 
+      message: 'Server is running but database is not connected',
+      database: 'disconnected',
+      error: error.message
+    });
+  }
 });
 
 // 404 handler (must be before error handler)

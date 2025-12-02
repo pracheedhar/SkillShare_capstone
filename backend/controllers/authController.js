@@ -8,6 +8,18 @@ const generateToken = require('../utils/generateToken');
 // @access  Public
 const signup = async (req, res) => {
   try {
+    // Check database connection first
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+    } catch (dbError) {
+      console.error('Database connection failed:', dbError);
+      return res.status(503).json({
+        success: false,
+        message: 'Database connection failed. Please check your MySQL connection.',
+        error: 'DATABASE_CONNECTION_ERROR'
+      });
+    }
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -65,10 +77,27 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     console.error('Signup error:', error);
+    
+    // Handle specific Prisma errors
+    if (error.code === 'P2002') {
+      return res.status(400).json({
+        success: false,
+        message: 'User already exists with this email'
+      });
+    }
+    
+    if (error.code === 'P1001' || error.code === 'P1017') {
+      return res.status(503).json({
+        success: false,
+        message: 'Database connection error. Please check your MySQL server.',
+        error: 'DATABASE_CONNECTION_ERROR'
+      });
+    }
+    
     res.status(500).json({
       success: false,
       message: 'Error registering user',
-      error: error.message
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 };
