@@ -62,7 +62,10 @@ export default function CourseDetails() {
   if (authLoading || loading) {
     return (
       <Layout>
-        <div className="text-center py-20">Loading course details...</div>
+        <div className="text-center py-20">
+          <div className="loading-spinner w-16 h-16 mx-auto mb-4"></div>
+          <p className="text-gray-400 text-xl">Loading course details...</p>
+        </div>
       </Layout>
     );
   }
@@ -70,53 +73,65 @@ export default function CourseDetails() {
   if (!course) {
     return (
       <Layout>
-        <div className="text-center py-20">Course not found</div>
+        <div className="glass-card text-center py-20">
+          <div className="text-6xl mb-4 floating">📚</div>
+          <p className="text-gray-400 text-xl">Course not found</p>
+        </div>
       </Layout>
     );
   }
 
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto animate-fade-in">
         {/* Course Header */}
-        <div className="glass-card mb-8">
+        <div className="glass-card mb-8 animate-slide-up">
           {course.thumbnail && (
-            <img
-              src={course.thumbnail}
-              alt={course.title}
-              className="w-full h-64 object-cover rounded-lg mb-6"
-            />
+            <div className="relative mb-6 rounded-xl overflow-hidden">
+              <img
+                src={course.thumbnail}
+                alt={course.title}
+                className="w-full h-64 md:h-80 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 right-4">
+                <h1 className="text-4xl md:text-5xl font-black mb-2 text-white">{course.title}</h1>
+              </div>
+            </div>
           )}
-          <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
-          <p className="text-gray-400 text-lg mb-6">{course.description}</p>
+          {!course.thumbnail && (
+            <h1 className="text-4xl md:text-5xl font-black mb-4 gradient-text">{course.title}</h1>
+          )}
           
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-6">
+          <p className="text-gray-300 text-lg mb-6 leading-relaxed">{course.description}</p>
+          
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6 p-4 bg-dark-card/50 rounded-xl border border-neon-orange/20">
+            <div className="flex items-center gap-6 flex-wrap">
               <div>
-                <span className="text-gray-400">Instructor: </span>
-                <span className="text-primary-400 font-semibold">
-                  {course.instructor?.name}
+                <span className="text-gray-400 text-sm">Instructor: </span>
+                <span className="neon-text font-bold text-lg">
+                  👤 {course.instructor?.name}
                 </span>
               </div>
               <div>
-                <span className="text-yellow-400">⭐ {course.rating.toFixed(1)}</span>
+                <span className="text-yellow-400 text-xl font-bold">⭐ {course.rating.toFixed(1)}</span>
                 <span className="text-gray-400 ml-2">
                   ({course.totalRatings} ratings)
                 </span>
               </div>
               <div className="text-gray-400">
-                {course.enrolledCount} students enrolled
+                👥 {course.enrolledCount} students enrolled
               </div>
             </div>
             
             {!enrolled && user?.role === 'STUDENT' && (
-              <button onClick={handleEnroll} className="btn-primary">
-                Enroll Now
+              <button onClick={handleEnroll} className="btn-primary text-lg px-8 py-3">
+                ✨ Enroll Now
               </button>
             )}
             {enrolled && (
-              <Link href={`/courses/${id}/learn`} className="btn-primary">
-                Continue Learning
+              <Link href={`/courses/${id}/learn`} className="btn-primary text-lg px-8 py-3">
+                🚀 Continue Learning
               </Link>
             )}
           </div>
@@ -126,19 +141,26 @@ export default function CourseDetails() {
           {/* Main Content */}
           <div className="md:col-span-2 space-y-6">
             {/* Lessons */}
-            <div className="glass-card">
-              <h2 className="text-2xl font-bold mb-4">Course Content</h2>
+            <div className="glass-card animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              <h2 className="text-3xl font-black mb-6 gradient-text">Course Content</h2>
               <div className="space-y-3">
                 {course.lessons?.map((lesson, index) => (
                   <div
                     key={lesson.id}
-                    className="p-4 bg-gray-800/50 rounded-lg flex items-center justify-between"
+                    className="p-4 bg-dark-card/50 rounded-xl border-2 border-dark-border hover:border-neon-orange/50 transition-all duration-300 group"
                   >
-                    <div>
-                      <span className="text-gray-400 mr-3">Lesson {index + 1}</span>
-                      <span className="font-semibold">{lesson.title}</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-neon-orange/20 flex items-center justify-center neon-text font-bold group-hover:scale-110 transition-transform">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <span className="text-gray-400 text-sm mr-3">Lesson {index + 1}</span>
+                          <span className="font-bold text-lg group-hover:text-neon-orange transition-colors">{lesson.title}</span>
+                        </div>
+                      </div>
+                      <span className="text-gray-400 font-semibold">⏱️ {lesson.duration} min</span>
                     </div>
-                    <span className="text-gray-400">{lesson.duration} min</span>
                   </div>
                 ))}
               </div>
@@ -146,16 +168,16 @@ export default function CourseDetails() {
 
             {/* Quizzes */}
             {course.quizzes?.length > 0 && (
-              <div className="glass-card">
-                <h2 className="text-2xl font-bold mb-4">Quizzes</h2>
+              <div className="glass-card animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                <h2 className="text-3xl font-black mb-6 gradient-text">Quizzes</h2>
                 <div className="space-y-3">
                   {course.quizzes.map((quiz) => (
                     <div
                       key={quiz.id}
-                      className="p-4 bg-gray-800/50 rounded-lg"
+                      className="p-4 bg-dark-card/50 rounded-xl border-2 border-dark-border hover:border-neon-orange/50 transition-all duration-300"
                     >
-                      <h3 className="font-semibold">{quiz.title}</h3>
-                      <p className="text-gray-400 text-sm mt-1">
+                      <h3 className="font-bold text-xl mb-2 neon-text">🎯 {quiz.title}</h3>
+                      <p className="text-gray-400 text-sm">
                         {quiz.description}
                       </p>
                     </div>
@@ -165,39 +187,39 @@ export default function CourseDetails() {
             )}
 
             {/* Discussions */}
-            <div className="glass-card">
-              <h2 className="text-2xl font-bold mb-4">Discussions</h2>
+            <div className="glass-card animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              <h2 className="text-3xl font-black mb-6 gradient-text">Discussions</h2>
               <Link
                 href={`/discussions/${id}`}
-                className="btn-primary"
+                className="btn-primary inline-block"
               >
-                View Discussions
+                💬 View Discussions
               </Link>
             </div>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-xl font-semibold mb-4">Course Info</h3>
-              <div className="space-y-3">
-                <div>
-                  <span className="text-gray-400">Category: </span>
-                  <span className="font-semibold">{course.category}</span>
+            <div className="glass-card sticky top-24 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+              <h3 className="text-2xl font-black mb-6 gradient-text">Course Info</h3>
+              <div className="space-y-4">
+                <div className="p-3 bg-dark-card/50 rounded-lg border border-neon-orange/20">
+                  <span className="text-gray-400 text-sm">Category: </span>
+                  <span className="font-bold neon-text text-lg">{course.category}</span>
                 </div>
-                <div>
-                  <span className="text-gray-400">Difficulty: </span>
-                  <span className="font-semibold">{course.difficulty}</span>
+                <div className="p-3 bg-dark-card/50 rounded-lg border border-neon-orange/20">
+                  <span className="text-gray-400 text-sm">Difficulty: </span>
+                  <span className="font-bold neon-text text-lg">{course.difficulty}</span>
                 </div>
-                <div>
-                  <span className="text-gray-400">Lessons: </span>
-                  <span className="font-semibold">
+                <div className="p-3 bg-dark-card/50 rounded-lg border border-neon-orange/20">
+                  <span className="text-gray-400 text-sm">Lessons: </span>
+                  <span className="font-bold neon-text text-lg">
                     {course.lessons?.length || 0}
                   </span>
                 </div>
-                <div>
-                  <span className="text-gray-400">Price: </span>
-                  <span className="font-semibold text-primary-400">
+                <div className="p-4 bg-gradient-to-r from-neon-orange/20 to-neon-orange-dark/20 rounded-lg border-2 border-neon-orange/50">
+                  <span className="text-gray-300 text-sm">Price: </span>
+                  <span className="font-black neon-text text-2xl">
                     ${course.price}
                   </span>
                 </div>
@@ -209,4 +231,3 @@ export default function CourseDetails() {
     </Layout>
   );
 }
-

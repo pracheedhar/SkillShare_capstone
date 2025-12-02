@@ -83,34 +83,45 @@ export default function Settings() {
   if (authLoading) {
     return (
       <Layout>
-        <div className="text-center py-20">Loading...</div>
+        <div className="text-center py-20">
+          <div className="loading-spinner w-16 h-16 mx-auto mb-4"></div>
+          <p className="text-gray-400 text-xl">Loading...</p>
+        </div>
       </Layout>
     );
   }
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">Settings</h1>
+      <div className="max-w-2xl mx-auto animate-fade-in">
+        <h1 className="text-5xl font-black mb-4 gradient-text animate-slide-up">Settings</h1>
+        <p className="text-gray-400 text-xl mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          Manage your profile and preferences
+        </p>
 
-        <div className="glass-card">
-          <h2 className="text-2xl font-semibold mb-6">Profile Settings</h2>
+        <div className="glass-card animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <h2 className="text-3xl font-black mb-6 gradient-text">Profile Settings</h2>
 
           {message && (
             <div
-              className={`mb-4 px-4 py-3 rounded-lg ${
+              className={`mb-6 px-4 py-3 rounded-lg border-2 animate-fade-in ${
                 message.includes('successfully')
-                  ? 'bg-green-500/20 border border-green-500 text-green-200'
-                  : 'bg-red-500/20 border border-red-500 text-red-200'
+                  ? 'bg-green-500/20 border-green-500/50 text-green-200 neon-border'
+                  : 'bg-red-500/20 border-red-500/50 text-red-200 neon-border'
               }`}
             >
-              {message}
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{message.includes('successfully') ? '✅' : '⚠️'}</span>
+                <span>{message}</span>
+              </div>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Name</label>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              <label className="block text-sm font-bold mb-3 text-gray-300">
+                <span className="neon-text">👤</span> Name
+              </label>
               <input
                 type="text"
                 name="name"
@@ -121,8 +132,10 @@ export default function Settings() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Bio</label>
+            <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+              <label className="block text-sm font-bold mb-3 text-gray-300">
+                <span className="neon-text">📝</span> Bio
+              </label>
               <textarea
                 name="bio"
                 value={formData.bio}
@@ -133,9 +146,9 @@ export default function Settings() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Avatar URL
+            <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
+              <label className="block text-sm font-bold mb-3 text-gray-300">
+                <span className="neon-text">🖼️</span> Avatar URL
               </label>
               <input
                 type="url"
@@ -147,9 +160,9 @@ export default function Settings() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                New Password (leave blank to keep current)
+            <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
+              <label className="block text-sm font-bold mb-3 text-gray-300">
+                <span className="neon-text">🔒</span> New Password (leave blank to keep current)
               </label>
               <input
                 type="password"
@@ -157,13 +170,14 @@ export default function Settings() {
                 value={formData.password}
                 onChange={handleChange}
                 className="input-field"
+                placeholder="••••••••"
               />
             </div>
 
             {formData.password && (
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Confirm New Password
+              <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
+                <label className="block text-sm font-bold mb-3 text-gray-300">
+                  <span className="neon-text">🔒</span> Confirm New Password
                 </label>
                 <input
                   type="password"
@@ -171,6 +185,7 @@ export default function Settings() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="input-field"
+                  placeholder="••••••••"
                 />
               </div>
             )}
@@ -178,9 +193,17 @@ export default function Settings() {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full"
+              className="btn-primary w-full text-lg py-4 animate-slide-up"
+              style={{ animationDelay: '0.8s' }}
             >
-              {loading ? 'Updating...' : 'Update Profile'}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="loading-spinner w-5 h-5"></div>
+                  Updating...
+                </span>
+              ) : (
+                '✨ Update Profile'
+              )}
             </button>
           </form>
         </div>
@@ -188,4 +211,3 @@ export default function Settings() {
     </Layout>
   );
 }
-
