@@ -11,22 +11,27 @@ npm install
 
 2. Create a `.env` file in the backend directory:
 ```
-PORT=5000
+PORT=5001
 NODE_ENV=development
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 JWT_EXPIRE=7d
-MONGODB_URI=mongodb://localhost:27017/skillshare
+DATABASE_URL=mysql://root:password@localhost:3306/skillshare
 FRONTEND_URL=http://localhost:3000
 ```
 
-3. Generate Prisma Client:
+3. Create MySQL database:
+```sql
+CREATE DATABASE skillshare;
+```
+
+4. Generate Prisma Client:
 ```bash
 npm run prisma:generate
 ```
 
-4. Run database migrations:
+5. Run database migrations:
 ```bash
-npm run prisma:migrate
+npm run prisma:migrate:dev
 ```
 
 5. Start the development server:
@@ -50,7 +55,7 @@ See the main README.md for complete API documentation.
 For deployment on Render or Railway:
 
 1. Set environment variables in your hosting platform
-2. Ensure MongoDB connection string is set correctly
-3. Run `npm run prisma:generate` and `npm run prisma:migrate` during build
+2. Ensure MySQL connection string (DATABASE_URL) is set correctly
+3. Run `npm run prisma:generate` and `npm run prisma:migrate:dev` during build
 4. Start with `npm start`
 

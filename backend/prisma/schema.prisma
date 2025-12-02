@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("MONGODB_URI")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -28,13 +28,13 @@ enum SubscriptionPlan {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int       @id @default(autoincrement())
   name          String
   email         String    @unique
   password      String
   role          UserRole  @default(STUDENT)
   avatar        String?
-  bio           String?
+  bio           String?   @db.Text
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
@@ -49,9 +49,9 @@ model User {
 }
 
 model Course {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int       @id @default(autoincrement())
   title         String
-  description   String    @db.String
+  description   String    @db.Text
   category      String
   difficulty    CourseDifficulty @default(BEGINNER)
   price         Float     @default(0)
@@ -59,7 +59,7 @@ model Course {
   rating        Float     @default(0)
   totalRatings  Int       @default(0)
   enrolledCount Int       @default(0)
-  instructorId  String    @db.ObjectId
+  instructorId  Int
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
@@ -74,75 +74,75 @@ model Course {
 }
 
 model Lesson {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int       @id @default(autoincrement())
   title         String
-  content       String    @db.String
+  content       String    @db.Text
   videoUrl      String?
   duration      Int       @default(0) // in minutes
   order         Int       @default(0)
-  courseId      String    @db.ObjectId
+  courseId      Int
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
   // Relations
-  course        Course    @relation(fields: [courseId], references: [id])
+  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   
   @@map("lessons")
 }
 
 model Quiz {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int       @id @default(autoincrement())
   title         String
-  description   String    @db.String
-  courseId      String    @db.ObjectId
+  description   String    @db.Text
+  courseId      Int
   questions     Json      // Array of question objects
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
   // Relations
-  course        Course    @relation(fields: [courseId], references: [id])
+  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   attempts      QuizAttempt[]
   
   @@map("quizzes")
 }
 
 model Enrollment {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  studentId     String    @db.ObjectId
-  courseId      String    @db.ObjectId
+  id            Int       @id @default(autoincrement())
+  studentId     Int
+  courseId      Int
   progress      Float     @default(0) // percentage 0-100
   completed     Boolean   @default(false)
   enrolledAt    DateTime  @default(now())
   completedAt   DateTime?
   
   // Relations
-  student       User      @relation(fields: [studentId], references: [id])
-  course        Course    @relation(fields: [courseId], references: [id])
+  student       User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   
   @@unique([studentId, courseId])
   @@map("enrollments")
 }
 
 model Discussion {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  courseId      String    @db.ObjectId
-  userId        String    @db.ObjectId
+  id            Int       @id @default(autoincrement())
+  courseId      Int
+  userId        Int
   title         String
-  content       String    @db.String
+  content       String    @db.Text
   replies       Json      @default("[]") // Array of reply objects
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
   // Relations
-  course        Course    @relation(fields: [courseId], references: [id])
-  user          User      @relation(fields: [userId], references: [id])
+  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("discussions")
 }
 
 model Subscription {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String    @db.ObjectId
+  id            Int       @id @default(autoincrement())
+  userId        Int
   plan          SubscriptionPlan
   startDate     DateTime  @default(now())
   endDate       DateTime
@@ -152,24 +152,23 @@ model Subscription {
   updatedAt     DateTime  @updatedAt
   
   // Relations
-  user          User      @relation(fields: [userId], references: [id])
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("subscriptions")
 }
 
 model QuizAttempt {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String    @db.ObjectId
-  quizId        String    @db.ObjectId
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  quizId        Int
   score         Float     @default(0)
   totalQuestions Int      @default(0)
   answers       Json      // User's answers
   completedAt   DateTime  @default(now())
   
   // Relations
-  user          User      @relation(fields: [userId], references: [id])
-  quiz          Quiz      @relation(fields: [quizId], references: [id])
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz          Quiz      @relation(fields: [quizId], references: [id], onDelete: Cascade)
   
   @@map("quiz_attempts")
 }
-

@@ -67,45 +67,48 @@ npm run dev
 
 ### backend/.env
 ```env
-PORT=5000
+PORT=5001
 NODE_ENV=development
 JWT_SECRET=skillshare-super-secret-jwt-key-change-in-production-2024
 JWT_EXPIRE=7d
-MONGODB_URI=mongodb://localhost:27017/skillshare
+DATABASE_URL=mysql://root:password@localhost:3306/skillshare
 FRONTEND_URL=http://localhost:3000
 ```
 
 ### frontend/.env.local
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:5001/api
 ```
 
 ## ⚠️ Important Notes
 
-1. **MongoDB must be running** before starting the backend
-   - Local: Start MongoDB service
-   - Atlas: Use your connection string in MONGODB_URI
+1. **MySQL must be running** before starting the backend
+   - Local: Start MySQL service
+   - Cloud: Use your connection string in DATABASE_URL
 
 2. **First time setup requires:**
+   - Create MySQL database: `CREATE DATABASE skillshare;`
    - `npm install` in both backend and frontend
    - `npm run prisma:generate` in backend
-   - `npm run prisma:migrate` in backend
+   - `npm run prisma:migrate:dev` in backend
 
 3. **If signup still doesn't work:**
-   - Check MongoDB is running
+   - Check MySQL is running
    - Check backend terminal for error messages
    - Check browser console for frontend errors
    - Verify .env files are created correctly
+   - Ensure database exists and migrations have been run
 
 ## 🐛 Common Issues & Solutions
 
 ### "Cannot connect to database"
-- Ensure MongoDB is running
-- Check MONGODB_URI in backend/.env
-- For MongoDB Atlas, whitelist your IP address
+- Ensure MySQL is running
+- Check DATABASE_URL in backend/.env
+- Verify database exists: `SHOW DATABASES;`
+- Check MySQL user permissions
 
-### "Port 5000 already in use"
-- Change PORT in backend/.env to another port (e.g., 5001)
+### "Port 5001 already in use"
+- Change PORT in backend/.env to another port (e.g., 5002)
 - Update NEXT_PUBLIC_API_URL in frontend/.env.local
 
 ### "Module not found"

@@ -16,7 +16,7 @@ A modern e-learning platform inspired by SkillShare, where instructors can creat
 
 - **Frontend**: Next.js (JavaScript), React.js, TailwindCSS
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB with Prisma ORM
+- **Database**: MySQL with Prisma ORM
 - **Authentication**: JWT (JSON Web Tokens)
 - **Hosting**: Vercel (Frontend), Render/Railway (Backend)
 
@@ -34,7 +34,7 @@ SkillShare_capstone/
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- MongoDB database (local or cloud like MongoDB Atlas)
+- MySQL database (local or cloud)
 - npm or yarn
 
 ### Installation
@@ -51,24 +51,29 @@ cd backend
 npm install
 ```
 
-3. Create a `.env` file:
+3. Create MySQL database:
+```sql
+CREATE DATABASE skillshare;
+```
+
+4. Create a `.env` file:
 ```env
-PORT=5000
+PORT=5001
 NODE_ENV=development
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 JWT_EXPIRE=7d
-MONGODB_URI=mongodb://localhost:27017/skillshare
+DATABASE_URL=mysql://root:password@localhost:3306/skillshare
 FRONTEND_URL=http://localhost:3000
 ```
 
-4. Generate Prisma Client:
+5. Generate Prisma Client:
 ```bash
 npm run prisma:generate
 ```
 
-5. Run database migrations:
+6. Run database migrations:
 ```bash
-npm run prisma:migrate
+npm run prisma:migrate:dev
 ```
 
 6. Start the development server:
@@ -90,7 +95,7 @@ npm install
 
 3. Create a `.env.local` file:
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:5001/api
 ```
 
 4. Start the development server:

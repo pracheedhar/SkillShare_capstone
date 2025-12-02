@@ -22,7 +22,7 @@ The project has **15 commits** documenting every step:
 12. **Courses pages**: Listing and detail pages
 13. **Dashboard & other pages**: Complete frontend
 14. **Documentation**: README files and deployment guides
-15. **Final fixes**: MongoDB compatibility and deployment guide
+15. **Final fixes**: MySQL migration and deployment guide
 
 ## 🏗️ Project Structure
 
@@ -84,13 +84,13 @@ SkillShare_capstone/
 
 - **Frontend**: Next.js 14, React, TailwindCSS
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB with Prisma ORM
+- **Database**: MySQL with Prisma ORM
 - **Authentication**: JWT
 - **Styling**: TailwindCSS with glassmorphism theme
 
 ## 🚀 Next Steps
 
-1. **Set up MongoDB**: Create a MongoDB database (local or Atlas)
+1. **Set up MySQL**: Create a MySQL database (local or cloud)
 2. **Install dependencies**: Run `npm install` in both backend and frontend
 3. **Configure environment**: Set up `.env` files
 4. **Run Prisma**: Generate client and run migrations

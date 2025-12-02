@@ -8,15 +8,16 @@ if [ ! -f "backend/.env" ]; then
     echo "⚠️  backend/.env file not found!"
     echo "Creating backend/.env from template..."
     cat > backend/.env << EOF
-PORT=5000
+PORT=5001
 NODE_ENV=development
 JWT_SECRET=skillshare-super-secret-jwt-key-change-in-production-2024
 JWT_EXPIRE=7d
-MONGODB_URI=mongodb://localhost:27017/skillshare
+DATABASE_URL=mysql://root:password@localhost:3306/skillshare
 FRONTEND_URL=http://localhost:3000
 EOF
     echo "✅ Created backend/.env"
-    echo "⚠️  Please update MONGODB_URI if using MongoDB Atlas"
+    echo "⚠️  Please update DATABASE_URL with your MySQL credentials"
+    echo "⚠️  Make sure to create the database: CREATE DATABASE skillshare;"
 fi
 
 cd backend
@@ -35,8 +36,7 @@ fi
 
 echo ""
 echo "Starting backend server..."
-echo "Backend will run on http://localhost:5000"
+echo "Backend will run on http://localhost:5001"
 echo ""
 
 npm run dev
-
