@@ -45,13 +45,34 @@ app.get('/api/health', async (req, res) => {
     res.json({ 
       status: 'OK', 
       message: 'Server is running',
-      database: 'connected'
+      database: 'connected',
+      timestamp: new Date().toISOString()
     });
   } catch (error) {
     res.status(503).json({ 
       status: 'ERROR', 
       message: 'Server is running but database is not connected',
       database: 'disconnected',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// Test signup endpoint (for debugging)
+app.get('/api/test/signup', async (req, res) => {
+  const prisma = require('./config/database');
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({
+      success: true,
+      message: 'Database connection OK. Signup endpoint should work.',
+      database: 'connected'
+    });
+  } catch (error) {
+    res.status(503).json({
+      success: false,
+      message: 'Database connection failed',
       error: error.message
     });
   }

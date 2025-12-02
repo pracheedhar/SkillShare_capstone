@@ -36,16 +36,38 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log('Login attempt:', { email });
       const response = await api.post('/auth/login', { email, password });
-      const { user, token } = response.data.data;
-      setToken(token);
-      setUser(user);
-      return { success: true, user };
+      
+      if (response.data.success && response.data.data) {
+        const { user, token } = response.data.data;
+        setToken(token);
+        setUser(user);
+        return { success: true, user };
+      } else {
+        return {
+          success: false,
+          message: response.data.message || 'Login failed',
+        };
+      }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 
-                          error.response?.data?.errors?.[0]?.msg || 
-                          error.message || 
-                          'Login failed';
+      console.error('Login error:', error);
+      console.error('Error response:', error.response?.data);
+      
+      let errorMessage = 'Login failed';
+      
+      if (error.response?.data) {
+        errorMessage = error.response.data.message || 
+                      error.response.data.errors?.[0]?.msg || 
+                      'Login failed';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
+        errorMessage = 'Cannot connect to server. Make sure the backend is running on port 5001.';
+      }
+      
       return {
         success: false,
         message: errorMessage,
@@ -55,21 +77,44 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password, role) => {
     try {
+      console.log('Signup attempt:', { name, email, role });
       const response = await api.post('/auth/signup', {
         name,
         email,
         password,
-        role,
+        role: role || 'STUDENT',
       });
-      const { user, token } = response.data.data;
-      setToken(token);
-      setUser(user);
-      return { success: true, user };
+      
+      if (response.data.success && response.data.data) {
+        const { user, token } = response.data.data;
+        setToken(token);
+        setUser(user);
+        return { success: true, user };
+      } else {
+        return {
+          success: false,
+          message: response.data.message || 'Signup failed',
+        };
+      }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 
-                          error.response?.data?.errors?.[0]?.msg || 
-                          error.message || 
-                          'Signup failed';
+      console.error('Signup error:', error);
+      console.error('Error response:', error.response?.data);
+      
+      let errorMessage = 'Signup failed';
+      
+      if (error.response?.data) {
+        errorMessage = error.response.data.message || 
+                      error.response.data.errors?.[0]?.msg || 
+                      error.response.data.error ||
+                      'Signup failed';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
+        errorMessage = 'Cannot connect to server. Make sure the backend is running on port 5001.';
+      }
+      
       return {
         success: false,
         message: errorMessage,
