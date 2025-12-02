@@ -20,11 +20,13 @@ const signup = async (req, res) => {
       });
     }
 
+    // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      const firstError = errors.array()[0];
       return res.status(400).json({
         success: false,
-        message: errors.array()[0].msg || 'Validation failed',
+        message: firstError.msg || 'Validation failed',
         errors: errors.array()
       });
     }
@@ -107,11 +109,13 @@ const signup = async (req, res) => {
 // @access  Public
 const login = async (req, res) => {
   try {
+    // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      const firstError = errors.array()[0];
       return res.status(400).json({
         success: false,
-        message: errors.array()[0].msg || 'Validation failed',
+        message: firstError.msg || 'Validation failed',
         errors: errors.array()
       });
     }
