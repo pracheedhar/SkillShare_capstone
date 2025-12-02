@@ -28,6 +28,13 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Log connection errors for debugging
+    if (!error.response) {
+      console.error('Network Error:', error.message);
+      console.error('API URL:', API_URL);
+      console.error('Make sure backend is running on port 5001');
+    }
+    
     if (error.response?.status === 401) {
       // Unauthorized - clear token and redirect to login
       Cookies.remove('token');

@@ -98,9 +98,24 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
+// Start server
+const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📡 API available at http://localhost:${PORT}/api`);
+  console.log(`🌐 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`\n✅ Backend is ready to accept connections!\n`);
+});
+
+// Handle server errors
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use!`);
+    console.error(`   Please stop the process using port ${PORT} or change PORT in .env`);
+    process.exit(1);
+  } else {
+    console.error('❌ Server error:', error);
+    process.exit(1);
+  }
 });
 
 module.exports = app;

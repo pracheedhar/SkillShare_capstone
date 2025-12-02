@@ -8,7 +8,7 @@ if [ ! -f "frontend/.env.local" ]; then
     echo "⚠️  frontend/.env.local file not found!"
     echo "Creating frontend/.env.local..."
     cat > frontend/.env.local << EOF
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:5001/api
 EOF
     echo "✅ Created frontend/.env.local"
 fi
