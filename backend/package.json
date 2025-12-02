@@ -10,7 +10,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:migrate:dev": "prisma migrate dev --name init",
     "prisma:studio": "prisma studio",
-    "check-db": "node scripts/check-db.js"
+    "check-db": "node scripts/check-db.js",
+    "setup-db": "node scripts/setup-database.js"
   },
   "keywords": ["learning", "platform", "api"],
   "author": "",

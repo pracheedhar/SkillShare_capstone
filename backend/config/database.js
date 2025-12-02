@@ -19,13 +19,32 @@ let isConnected = false;
   } catch (error) {
     isConnected = false;
     console.error('❌ Database connection error:', error.message);
-    console.error('Error details:', error);
-    console.error('\n📋 Troubleshooting steps:');
-    console.error('1. Make sure MySQL is running');
-    console.error('2. Check DATABASE_URL in .env file');
-    console.error('3. Verify database exists: CREATE DATABASE skillshare;');
-    console.error('4. Run migrations: npm run prisma:migrate:dev');
-    console.error('5. Check MySQL user permissions\n');
+    
+    // Provide specific error messages
+    if (error.code === 'P1000') {
+      console.error('\n🔐 Authentication Error:');
+      console.error('   The MySQL username or password is incorrect.');
+      console.error('   Run: npm run setup-db');
+      console.error('   Or update DATABASE_URL in .env with correct credentials\n');
+    } else if (error.code === 'P1001') {
+      console.error('\n🔌 Connection Error:');
+      console.error('   Cannot reach MySQL server.');
+      console.error('   Make sure MySQL is running:');
+      console.error('   - macOS: brew services start mysql');
+      console.error('   - Linux: sudo systemctl start mysql');
+      console.error('   - Windows: Start MySQL service\n');
+    } else if (error.code === 'P1003') {
+      console.error('\n📦 Database Not Found:');
+      console.error('   Database "skillshare" does not exist.');
+      console.error('   Create it: CREATE DATABASE skillshare;');
+      console.error('   Or run: npm run setup-db\n');
+    } else {
+      console.error('\n📋 Troubleshooting steps:');
+      console.error('1. Run database setup: npm run setup-db');
+      console.error('2. Check MySQL is running');
+      console.error('3. Verify DATABASE_URL in .env file');
+      console.error('4. Test connection: npm run check-db\n');
+    }
   }
 })();
 
