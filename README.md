@@ -34,16 +34,81 @@ SkillShare_capstone/
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- MongoDB database
+- MongoDB database (local or cloud like MongoDB Atlas)
 - npm or yarn
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies for both backend and frontend
-3. Set up environment variables
-4. Run Prisma migrations
-5. Start development servers
+#### Backend Setup
+
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env` file:
+```env
+PORT=5000
+NODE_ENV=development
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_EXPIRE=7d
+MONGODB_URI=mongodb://localhost:27017/skillshare
+FRONTEND_URL=http://localhost:3000
+```
+
+4. Generate Prisma Client:
+```bash
+npm run prisma:generate
+```
+
+5. Run database migrations:
+```bash
+npm run prisma:migrate
+```
+
+6. Start the development server:
+```bash
+npm run dev
+```
+
+#### Frontend Setup
+
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env.local` file:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+4. Start the development server:
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Prisma Studio
+
+To view and manage your database:
+```bash
+cd backend
+npm run prisma:studio
+```
+
+This will open Prisma Studio at http://localhost:5555
 
 ## License
 
