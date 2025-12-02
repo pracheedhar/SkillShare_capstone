@@ -42,9 +42,13 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true, user };
     } catch (error) {
+      const errorMessage = error.response?.data?.message || 
+                          error.response?.data?.errors?.[0]?.msg || 
+                          error.message || 
+                          'Login failed';
       return {
         success: false,
-        message: error.response?.data?.message || 'Login failed',
+        message: errorMessage,
       };
     }
   };
@@ -62,9 +66,13 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true, user };
     } catch (error) {
+      const errorMessage = error.response?.data?.message || 
+                          error.response?.data?.errors?.[0]?.msg || 
+                          error.message || 
+                          'Signup failed';
       return {
         success: false,
-        message: error.response?.data?.message || 'Signup failed',
+        message: errorMessage,
       };
     }
   };
