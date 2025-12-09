@@ -116,7 +116,7 @@ export default function Login() {
 
         <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
           <p className="text-gray-400">
-            Don't have an account?{' '}
+            Donot have an account?{' '}
             <Link href="/signup" className="neon-text font-bold hover:underline transition-all duration-300 hover:scale-110 inline-block">
               Sign up
             </Link>
