@@ -56,13 +56,13 @@ export default function Home() {
           <h2 className="text-5xl md:text-6xl font-black mb-6 gradient-text animate-slide-up" style={{ animationDelay: '0.1s' }}>
             at Your Own Pace
           </h2>
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-black-300 mb-12 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Join thousands of students learning from expert instructors. 
-            <span className="neon-text"> Access unlimited courses</span> with our subscription plans.
+            <span className="neon-text"> Access unlimited courses</span> with our plans.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: '0.3s' }}>
             <Link href="/signup" className="btn-primary text-lg px-10 py-4 text-xl">
-              ✨ Get Started
+              Get Started
             </Link>
             <Link href="/courses" className="btn-secondary text-lg px-10 py-4 text-xl">
               🔍 Browse Courses
@@ -93,7 +93,7 @@ export default function Home() {
           <div className="glass-card text-center group animate-slide-up" style={{ animationDelay: '0.1s' }}>
             <div className="text-6xl mb-6 floating group-hover:scale-110 transition-transform duration-300">🎓</div>
             <h3 className="text-2xl font-bold mb-4 neon-text">Expert Instructors</h3>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-black-300 leading-relaxed">
               Learn from industry professionals with years of experience and real-world expertise
             </p>
             <div className="mt-4 h-1 bg-gradient-to-r from-transparent via-neon-orange to-transparent"></div>
@@ -102,7 +102,7 @@ export default function Home() {
           <div className="glass-card text-center group animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <div className="text-6xl mb-6 floating group-hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.5s' }}>📚</div>
             <h3 className="text-2xl font-bold mb-4 neon-text">Unlimited Access</h3>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-black-300 leading-relaxed">
               Subscribe once and get access to all courses forever. Learn at your own pace, anytime, anywhere
             </p>
             <div className="mt-4 h-1 bg-gradient-to-r from-transparent via-neon-orange to-transparent"></div>
@@ -111,7 +111,7 @@ export default function Home() {
           <div className="glass-card text-center group animate-slide-up" style={{ animationDelay: '0.3s' }}>
             <div className="text-6xl mb-6 floating group-hover:scale-110 transition-transform duration-300" style={{ animationDelay: '1s' }}>💬</div>
             <h3 className="text-2xl font-bold mb-4 neon-text">Community Support</h3>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-black-300 leading-relaxed">
               Connect with peers and instructors through discussion forums and get help when you need it
             </p>
             <div className="mt-4 h-1 bg-gradient-to-r from-transparent via-neon-orange to-transparent"></div>
@@ -123,11 +123,11 @@ export default function Home() {
       <section className="container mx-auto px-4 py-20 text-center relative z-10">
         <div className="glass-card max-w-3xl mx-auto animate-fade-in">
           <h2 className="text-4xl font-black mb-6 gradient-text">Ready to Start Learning?</h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-black-300 mb-8">
             Join thousands of students already learning on SkillShare
           </p>
           <Link href="/signup" className="btn-primary text-xl px-12 py-4 inline-block">
-            🚀 Start Your Journey
+            Start Your Journey
           </Link>
         </div>
       </section>

@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }) => {
         role: role || 'STUDENT',
       });
       
+      console.log(response)
       if (response.data.success && response.data.data) {
         const { user, token } = response.data.data;
         setToken(token);

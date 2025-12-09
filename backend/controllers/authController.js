@@ -9,27 +9,28 @@ const generateToken = require('../utils/generateToken');
 const signup = async (req, res) => {
   try {
     // Check database connection first
-    try {
-      await prisma.$queryRaw`SELECT 1`;
-    } catch (dbError) {
-      console.error('Database connection failed:', dbError);
-      return res.status(503).json({
-        success: false,
-        message: 'Database connection failed. Please check your MySQL connection.',
-        error: 'DATABASE_CONNECTION_ERROR'
-      });
-    }
+    // try {
+
+    //   await prisma.$queryRaw`SELECT 1`;
+    // } catch (dbError) {
+    //   console.error('Database connection failed:', dbError);
+    //   return res.status(503).json({
+    //     success: false,
+    //     message: 'Database connection failed. Please check your MySQL connection.',
+    //     error: 'DATABASE_CONNECTION_ERROR'
+    //   });
+    // }
 
     // Validate request
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const firstError = errors.array()[0];
-      return res.status(400).json({
-        success: false,
-        message: firstError.msg || 'Validation failed',
-        errors: errors.array()
-      });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   const firstError = errors.array()[0];
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: firstError.msg || 'Validation failed',
+    //     errors: errors.array()
+    //   });
+    // }
 
     const { name, email, password, role } = req.body;
 
