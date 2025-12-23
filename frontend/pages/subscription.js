@@ -95,7 +95,7 @@ export default function Subscription() {
               <div className="text-6xl mb-4 floating">📅</div>
               <h2 className="text-4xl font-black mb-2 gradient-text">Monthly Plan</h2>
               <div className="flex items-baseline justify-center gap-2 mb-4">
-                <span className="text-6xl font-black neon-text">$29.99</span>
+                <span className="text-6xl font-black neon-text">₹29.99</span>
                 <span className="text-gray-400">/month</span>
               </div>
             </div>
@@ -133,10 +133,10 @@ export default function Subscription() {
               <div className="text-6xl mb-4 floating" style={{ animationDelay: '0.5s' }}>🎯</div>
               <h2 className="text-4xl font-black mb-2 gradient-text">Yearly Plan</h2>
               <div className="flex items-baseline justify-center gap-2 mb-2">
-                <span className="text-6xl font-black neon-text">$299.99</span>
+                <span className="text-6xl font-black neon-text">₹299.99</span>
                 <span className="text-gray-400">/year</span>
               </div>
-              <p className="text-neon-orange font-bold text-lg mb-4">💰 Save $60 per year</p>
+              <p className="text-neon-orange font-bold text-lg mb-4">💰 Save ₹60 per year</p>
             </div>
             <ul className="space-y-3 mb-8">
               <li className="flex items-center text-gray-300">
