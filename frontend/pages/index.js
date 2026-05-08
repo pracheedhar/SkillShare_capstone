@@ -51,10 +51,10 @@ export default function Home() {
       <section className="container mx-auto px-4 py-20 text-center relative z-10">
         <div className="animate-fade-in">
           <h1 className="text-6xl md:text-7xl font-black mb-6 gradient-text animate-slide-up">
-            Learn New Skills
+            FUCKKKKK YOUUUUUUU
           </h1>
           <h2 className="text-5xl md:text-6xl font-black mb-6 gradient-text animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            at Your Own Pace
+            KUSHAL
           </h2>
           <p className="text-xl md:text-2xl text-black-300 mb-12 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Join thousands of students learning from expert instructors. 
